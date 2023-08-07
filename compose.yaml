@@ -1,0 +1,27 @@
+version: '3'
+services:
+  rsyslog:
+    image: rsyslog/syslog_appliance_alpine:latest
+    ports:
+      - "514:514/udp"
+    volumes:
+      - ./rsyslog.conf:/etc/rsyslog.conf
+    networks:
+      - my-network
+
+
+  spring-app:
+    image: spring-boot-with-syslog:latest
+    ports:
+      - "8080:8080"
+#    logging:
+#      driver: syslog
+#      options:
+#        syslog-address: "udp://localhost:514"
+#        tag: "spring-app-container"
+    networks:
+      - my-network
+
+networks:
+  my-network:
+
